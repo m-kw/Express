@@ -13,4 +13,16 @@
     Message: <textarea name="message"></textarea>
   </label>
   <button type="submit">Send message</button>
+
+  {{#if isSent}}
+  <div class="isSent">
+    <p>The message has been sent</p>
+  </div>
+  {{/if}}
+
+  {{#if isError}}
+  <div class="isError">
+    <p>You can't leave fields empty</p>
+  </div>
+  {{/if}}
 </form>
