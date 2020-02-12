@@ -12,7 +12,7 @@
 </div>
 {{/if}}
 
-<form action="/contact/send-message" method="POST">
+<form action="/contact/send-message" method="POST" enctype="multipart/form-data">
   <label>
     Your name: <input type="text" name="author">
   </label>
@@ -22,7 +22,9 @@
   <label>
     Title: <input type="text" name="title">
   </label>
-
+  <label>
+    Upload picture: <input type="file" name="file" accept=".png, .jpg, .jpeg, .gif">
+  </label>
   <label>
     Message: <textarea name="message"></textarea>
   </label>
