@@ -1,8 +1,9 @@
 const express = require('express');
 const path = require('path');
 const hbs = require('express-handlebars');
-const formidable = require('formidable');
+const multer = require('multer');
 
+const upload = multer();
 const app = express();
 
 app.engine('hbs', hbs());
@@ -36,19 +37,14 @@ app.get('/hello/:name', (req, res) => {
   res.render('hello', { name: req.params.name });
 });
 
-app.post('/contact/send-message', (req, res) => {
-  const { author, sender, title, message, file } = req.body;
-  const required = ['author', 'sender', 'title', 'message', 'file'];
+app.post('/contact/send-message', upload.single('file'), (req, res, next) => {
+  const { author, sender, title, message } = req.body;
 
-  const form = formidable({ multiples: true });
-
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.json({ fields, files });
-  });
+  if (author && sender && title && message && req.file.originalname) {
+    res.render('contact', { isSent: true });
+  } else {
+    res.render('contact', { isError: true });
+  }
 });
 
 app.use((req, res) => {
